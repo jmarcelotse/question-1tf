@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform:
-    name: Apply Terraform in ${{ github.ref }}
+    name: Apply Terraform in ${{ github.ref_name }} branch
     runs-on: ubuntu-latest
 
     env:
@@ -28,13 +28,13 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: ./environments/${{ github.ref }}
+      working-directory: ./environments/${{ github.ref_name }}
 
     - name: Terraform Plan
       run: terraform plan -var-file="terraform.tfvars"
-      working-directory: ./environments/${{ github.ref }}
+      working-directory: ./environments/${{ github.ref_name }}
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/prod'
+      if: github.ref_name == 'dev' || github.ref_name == 'staging' || github.ref_name == 'prod'
       run: terraform apply -var-file="terraform.tfvars" -auto-approve
-      working-directory: ./environments/${{ github.ref }}
+      working-directory: ./environments/${{ github.ref_name }}

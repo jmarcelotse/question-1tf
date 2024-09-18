@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "terraform_state_bucket" {
   object_lock_enabled = true
 
   tags = {
-    Name        = "Terraform State Bucket"
+    Name        = "Terraform State Bucket teste"
     Environment = var.environment
   }
 }
